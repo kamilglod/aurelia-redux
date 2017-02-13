@@ -1,0 +1,8 @@
+<template>
+  <input type="text" value.bind="state.username" />
+  <button click.delegate="login(state.username)">login</button>
+  <button click.delegate="logout()">logout</button>
+
+  <p>username: ${state.username}</p>
+  <p>isAuthorized: ${state.isAuthorized}</p>
+</template>
