@@ -11,7 +11,7 @@ Promise.config({
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    .plugin('aurelia-redux', store);
+    .plugin('aurelia-redux-immutable', store);
 
   if (environment.debug) {
     aurelia.use.developmentLogging();

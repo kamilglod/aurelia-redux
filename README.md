@@ -3,22 +3,19 @@
 Aurelia plugin for redux is auto inject state and dispatcher to view models. Additionally it keeps synced redux state in view models so it will be auto updated when change occurred.
 
 
-### Name of the plugin
-Originally this package was named `aurelia-redux` but because this name is already reserved I used `aurelia-redux-immutable`.
-However to make imports shorter we can define package `name` in `aurelia.json` so we can still use `aurelia-redux` in projects.
-
-
 ### Installation
 
 * using Aurelia CLI:
-  * run `npm install aurelia-redux-immutable`
+  * run `npm install immutable redux aurelia-redux-immutable`
   * add
   ```
+  "immutable",
   {
-    "name": "aurelia-redux",
-    "path": "../node_modules/aurelia-redux-immutable/dist/amd",
-    "main": "index"
-  },
+    "name": "redux",
+    "path": "../node_modules/redux/dist",
+    "main": "redux"
+  }
+  "aurelia-redux-immutable",
   ```
   to `aurelia.json`
 
@@ -28,20 +25,21 @@ Use this plugin as standard aurelia plugin, just pass your store instance.
 ```
   aurelia.use
     .standardConfiguration()
-    .plugin('aurelia-redux', storeInstance);
+    .plugin('aurelia-redux-immutable', storeInstance);
 ```
 
 ### Simple usage
 
 
 ```
-import connect from 'aurelia-redux';
+import connect from 'aurelia-redux-immutable';
 
 
 class SomeViewModel {
   constructor() {
     connect(this);
 
+    // each time state change occured this.state will be updated to the newest version
     console.log(this.dispatch, this.state);
   }
 }
@@ -50,7 +48,7 @@ class SomeViewModel {
 ### Usage with reselect
 
 ```
-import connect from 'aurelia-redux';
+import connect from 'aurelia-redux-immutable';
 
 import { username, isAuthorizedState } from 'store/user/selectors';
 
@@ -66,6 +64,8 @@ class SomeViewModel {
   constructor() {
     connect(this, mapState);
 
+    // each time state change occured this.state will be updated to the newest version
+    // if substate returned by mapState will differ
     console.log(this.dispatch, this.state);
   }
 }

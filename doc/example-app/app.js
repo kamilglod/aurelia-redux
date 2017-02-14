@@ -1,10 +1,19 @@
+import connect from 'aurelia-redux-immutable';
 
-import connect from 'aurelia-redux';
 import { username, isAuthorizedState } from 'store/user/selectors';
 import { loggedIn, logout } from 'store/user/actions';
 
 
+const mapState = (state) => {
+  return {
+    isAuthorized: isAuthorizedState(state),
+    username: username(state),
+  };
+};
+
+
 export class App {
+
   constructor() {
     connect(this, mapState);
   }
@@ -21,11 +30,3 @@ export class App {
     console.log('original detached');
   }
 }
-
-
-const mapState = (state) => {
-  return {
-    isAuthorized: isAuthorizedState(state),
-    username: username(state),
-  };
-};

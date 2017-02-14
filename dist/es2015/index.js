@@ -1,20 +1,18 @@
-import { Container } from 'aurelia-dependency-injection';
 import { fromJS } from 'immutable';
 
-const AURELIA_DI_STORE_KEY = 'AURELIA_DI_STORE_KEY';
+let store;
 
-const configure = (aurelia, store) => {
-  if (!store || typeof store !== 'object') {
-    console.error('You need to pass a store creator function.');
+const configure = (aurelia, storeInstance) => {
+  if (!storeInstance || typeof storeInstance !== 'object') {
+    console.error('You need to pass a store to aurelia-redux-immutable configurator function.');
     return;
   }
 
-  aurelia.container.registerInstance(AURELIA_DI_STORE_KEY, store);
+  store = aurelia.container.get(storeInstance);
 };
 
 const connect = (viewModel, stateMapper) => {
   stateMapper = stateMapper || (state => state);
-  const store = Container.instance.get(AURELIA_DI_STORE_KEY);
   const state = store.getState();
   const dispatch = store.dispatch;
   let stateToShallowCompare;
